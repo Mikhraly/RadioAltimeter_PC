@@ -34,12 +34,17 @@ namespace ComPort {
 				delete components;
 			}
 		}
+	private: System::IO::Ports::SerialPort^ serialPort;
+	protected:
+
+	protected:
+	private: System::ComponentModel::IContainer^ components;
 
 	private:
 		/// <summary>
 		/// Обязательная переменная конструктора.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -48,11 +53,25 @@ namespace ComPort {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			this->components = gcnew System::ComponentModel::Container();
-			this->Size = System::Drawing::Size(300,300);
-			this->Text = L"MyForm";
-			this->Padding = System::Windows::Forms::Padding(0);
+			this->components = (gcnew System::ComponentModel::Container());
+			this->serialPort = (gcnew System::IO::Ports::SerialPort(this->components));
+			this->SuspendLayout();
+			// 
+			// serialPort
+			// 
+			this->serialPort->PortName = L"COM1";
+			this->serialPort->BaudRate = 115200;
+			this->serialPort->DataBits = 8;
+			// 
+			// MyForm
+			// 
+			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->ClientSize = System::Drawing::Size(284, 261);
+			this->Name = L"MyForm";
+			this->Text = L"MyForm";
+			this->ResumeLayout(false);
+
 		}
 #pragma endregion
 	};
