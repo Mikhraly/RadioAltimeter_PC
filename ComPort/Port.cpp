@@ -15,3 +15,7 @@ Port::~Port() {
 	this->comPort->Close();
 }
 
+void Port::write(String^ text) {
+	this->comPort->Write(text);
+}
+

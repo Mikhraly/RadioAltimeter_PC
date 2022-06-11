@@ -37,17 +37,14 @@ namespace ComPort {
 		}
 
 
-
-	private: System::Windows::Forms::Button^ buttonOpenPort;
-	protected:
-
-	protected:
-	private: System::ComponentModel::IContainer^ components;
-
 	private:
+		System::Windows::Forms::Button^ buttonOpenPort;
+
+
 		/// <summary>
 		/// Обязательная переменная конструктора.
 		/// </summary>
+		System::ComponentModel::IContainer^ components;
 
 
 #pragma region Windows Form Designer generated code

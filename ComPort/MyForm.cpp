@@ -1,4 +1,5 @@
 #include "MyForm.h"
+#include "Port.h"
 
 using namespace System;
 using namespace System::Windows::Forms;
@@ -12,8 +13,9 @@ int main() {
 
 
 
-
 System::Void ComPort::MyForm::buttonOpenPort_Click(System::Object^ sender, System::EventArgs^ e) {
-	
+	Port port("COM1", 115200);
+	port.write("Hello!");
 	return System::Void();
 }
+
