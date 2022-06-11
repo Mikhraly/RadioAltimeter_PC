@@ -37,7 +37,7 @@ namespace ComPort {
 		}
 
 
-	private: SerialPort^ port;
+
 	private: System::Windows::Forms::Button^ buttonOpenPort;
 	protected:
 
@@ -68,6 +68,7 @@ namespace ComPort {
 			this->buttonOpenPort->TabIndex = 0;
 			this->buttonOpenPort->Text = L"OpenPort";
 			this->buttonOpenPort->UseVisualStyleBackColor = true;
+			this->buttonOpenPort->Click += gcnew System::EventHandler(this, &MyForm::buttonOpenPort_Click);
 			// 
 			// MyForm
 			// 
@@ -82,9 +83,9 @@ namespace ComPort {
 		}
 #pragma endregion
 
-
-		void openSerialPort() {
-			port->Open();
-		}
+	private: System::Void buttonOpenPort_Click(System::Object^ sender, System::EventArgs^ e);
 	};
+
+
+
 }

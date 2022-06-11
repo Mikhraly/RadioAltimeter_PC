@@ -9,3 +9,11 @@ int main() {
 	ComPort::MyForm form;
 	Application::Run(% form);
 }
+
+
+
+
+System::Void ComPort::MyForm::buttonOpenPort_Click(System::Object^ sender, System::EventArgs^ e) {
+	
+	return System::Void();
+}
