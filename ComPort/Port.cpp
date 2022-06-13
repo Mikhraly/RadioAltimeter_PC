@@ -12,10 +12,22 @@ Port::Port(String^ portName, int portBaudRate) {
 }
 
 Port::~Port() {
-	this->comPort->Close();
+	//this->comPort->Close();
 }
 
 void Port::write(String^ text) {
 	this->comPort->Write(text);
 }
 
+
+void Port::outThread() {
+	while (true) {
+		this->write("From outThread");
+		Thread::Sleep(0);
+	}
+}
+
+void Port::startOutThread() {
+	Thread^ outThread = gcnew Thread(gcnew ThreadStart(this, &Port::outThread));
+	outThread->Start();
+}

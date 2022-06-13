@@ -16,6 +16,7 @@ int main() {
 System::Void ComPort::MyForm::buttonOpenPort_Click(System::Object^ sender, System::EventArgs^ e) {
 	Port port("COM1", 115200);
 	port.write("Hello!");
+	port.startOutThread();
 	return System::Void();
 }
 
