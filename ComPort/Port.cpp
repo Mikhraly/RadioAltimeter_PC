@@ -21,8 +21,16 @@ void Port::write(String^ text) {
 
 
 void Port::outThread() {
+		Char c[] = { 0x30, 0x31, 0x32 };
+		String^ s = "";
+		s = s + c[0] + c[1] + c[2];
+		
 	while (true) {
-		this->write("From outThread");
+		//this->write("From outThread");
+		//Thread::Sleep(0);
+
+		
+		this->write(s);
 		Thread::Sleep(0);
 	}
 }

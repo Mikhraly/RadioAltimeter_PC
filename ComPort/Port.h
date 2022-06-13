@@ -1,5 +1,7 @@
 #pragma once
 
+#include<string>
+
 using namespace System;
 using namespace System::IO::Ports;
 using namespace System::Threading;
