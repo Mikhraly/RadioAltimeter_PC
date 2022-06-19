@@ -68,6 +68,17 @@ namespace ComPort {
 	private: System::Windows::Forms::ToolStripStatusLabel^ portNameStatusLabel;
 	private: System::Windows::Forms::ToolStripStatusLabel^ portSpeedStatusLabel;
 	private: System::Windows::Forms::ToolStripStatusLabel^ isConnectStatusLabel;
+	private: System::Windows::Forms::TextBox^ textBoxHightInput;
+	private: System::Windows::Forms::Label^ labelHightInput;
+
+
+	private: System::Windows::Forms::Button^ buttonHightSet;
+	private: System::Windows::Forms::Label^ labelHightSet;
+
+
+
+
+	private: System::Windows::Forms::GroupBox^ groupBoxHight;
 
 
 
@@ -109,12 +120,20 @@ namespace ComPort {
 			this->portNameStatusLabel = (gcnew System::Windows::Forms::ToolStripStatusLabel());
 			this->portSpeedStatusLabel = (gcnew System::Windows::Forms::ToolStripStatusLabel());
 			this->isConnectStatusLabel = (gcnew System::Windows::Forms::ToolStripStatusLabel());
+			this->textBoxHightInput = (gcnew System::Windows::Forms::TextBox());
+			this->labelHightInput = (gcnew System::Windows::Forms::Label());
+			this->buttonHightSet = (gcnew System::Windows::Forms::Button());
+			this->labelHightSet = (gcnew System::Windows::Forms::Label());
+			this->groupBoxHight = (gcnew System::Windows::Forms::GroupBox());
 			this->menuStrip1->SuspendLayout();
 			this->statusStrip1->SuspendLayout();
+			this->groupBoxHight->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// menuStrip1
 			// 
+			this->menuStrip1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
+				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->menuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->portSettingsToolStripMenuItem });
 			this->menuStrip1->Location = System::Drawing::Point(0, 0);
 			this->menuStrip1->Name = L"menuStrip1";
@@ -139,7 +158,7 @@ namespace ComPort {
 					this->com2, this->com3, this->com4, this->com5
 			});
 			this->portNameToolStripMenuItem->Name = L"portNameToolStripMenuItem";
-			this->portNameToolStripMenuItem->Size = System::Drawing::Size(180, 22);
+			this->portNameToolStripMenuItem->Size = System::Drawing::Size(144, 22);
 			this->portNameToolStripMenuItem->Text = L"Порт";
 			// 
 			// com1
@@ -184,7 +203,7 @@ namespace ComPort {
 					this->speed2400, this->speed4800, this->speed9600, this->speed19200, this->speed38400, this->speed57600, this->speed115200
 			});
 			this->portSpeedToolStripMenuItem->Name = L"portSpeedToolStripMenuItem";
-			this->portSpeedToolStripMenuItem->Size = System::Drawing::Size(180, 22);
+			this->portSpeedToolStripMenuItem->Size = System::Drawing::Size(144, 22);
 			this->portSpeedToolStripMenuItem->Text = L"Скорость";
 			// 
 			// speed1200
@@ -246,7 +265,7 @@ namespace ComPort {
 			// portConnectToolStripMenuItem
 			// 
 			this->portConnectToolStripMenuItem->Name = L"portConnectToolStripMenuItem";
-			this->portConnectToolStripMenuItem->Size = System::Drawing::Size(180, 22);
+			this->portConnectToolStripMenuItem->Size = System::Drawing::Size(144, 22);
 			this->portConnectToolStripMenuItem->Text = L"Подключить";
 			this->portConnectToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::portConnectToolStripMenuItem_Click);
 			// 
@@ -282,11 +301,68 @@ namespace ComPort {
 			this->isConnectStatusLabel->Size = System::Drawing::Size(98, 17);
 			this->isConnectStatusLabel->Text = L"Не подключено!";
 			// 
+			// textBoxHightInput
+			// 
+			this->textBoxHightInput->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->textBoxHightInput->Location = System::Drawing::Point(120, 40);
+			this->textBoxHightInput->Name = L"textBoxHightInput";
+			this->textBoxHightInput->Size = System::Drawing::Size(100, 26);
+			this->textBoxHightInput->TabIndex = 4;
+			this->textBoxHightInput->Text = L"5";
+			// 
+			// labelHightInput
+			// 
+			this->labelHightInput->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->labelHightInput->Location = System::Drawing::Point(20, 40);
+			this->labelHightInput->Name = L"labelHightInput";
+			this->labelHightInput->Size = System::Drawing::Size(100, 26);
+			this->labelHightInput->TabIndex = 5;
+			this->labelHightInput->Text = L"Ввести >>";
+			this->labelHightInput->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
+			// 
+			// buttonHightSet
+			// 
+			this->buttonHightSet->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->buttonHightSet->Location = System::Drawing::Point(230, 40);
+			this->buttonHightSet->Name = L"buttonHightSet";
+			this->buttonHightSet->Size = System::Drawing::Size(145, 26);
+			this->buttonHightSet->TabIndex = 6;
+			this->buttonHightSet->Text = L">> Отправить >>";
+			this->buttonHightSet->UseVisualStyleBackColor = true;
+			// 
+			// labelHightSet
+			// 
+			this->labelHightSet->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->labelHightSet->Location = System::Drawing::Point(385, 40);
+			this->labelHightSet->Name = L"labelHightSet";
+			this->labelHightSet->Size = System::Drawing::Size(100, 26);
+			this->labelHightSet->TabIndex = 7;
+			this->labelHightSet->Text = L"5";
+			this->labelHightSet->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
+			// 
+			// groupBoxHight
+			// 
+			this->groupBoxHight->Controls->Add(this->labelHightInput);
+			this->groupBoxHight->Controls->Add(this->labelHightSet);
+			this->groupBoxHight->Controls->Add(this->textBoxHightInput);
+			this->groupBoxHight->Controls->Add(this->buttonHightSet);
+			this->groupBoxHight->Location = System::Drawing::Point(0, 35);
+			this->groupBoxHight->Name = L"groupBoxHight";
+			this->groupBoxHight->Size = System::Drawing::Size(500, 99);
+			this->groupBoxHight->TabIndex = 8;
+			this->groupBoxHight->TabStop = false;
+			this->groupBoxHight->Text = L"Текущая высота в метрах";
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(500, 400);
+			this->Controls->Add(this->groupBoxHight);
 			this->Controls->Add(this->statusStrip1);
 			this->Controls->Add(this->menuStrip1);
 			this->MainMenuStrip = this->menuStrip1;
@@ -296,6 +372,8 @@ namespace ComPort {
 			this->menuStrip1->PerformLayout();
 			this->statusStrip1->ResumeLayout(false);
 			this->statusStrip1->PerformLayout();
+			this->groupBoxHight->ResumeLayout(false);
+			this->groupBoxHight->PerformLayout();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
