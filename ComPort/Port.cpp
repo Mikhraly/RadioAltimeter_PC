@@ -7,8 +7,6 @@ Port::Port(String^ portName, int portBaudRate) {
 	this->comPort->StopBits = StopBits::One;
 	this->comPort->Parity = Parity::None;
 	this->comPort->Handshake = Handshake::None;
-
-	this->open();
 }
 
 Port::~Port() {}
