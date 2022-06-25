@@ -39,31 +39,9 @@ namespace ComPort {
 
 	private: SerialPort^ mySerialPort = gcnew SerialPort("COM1", 115200, Parity::None, 8, StopBits::One);
 	private: System::Windows::Forms::MenuStrip^ menuStrip1;
-	private: System::Windows::Forms::ToolStripMenuItem^ portSettingsToolStripMenuItem;
-	private: System::Windows::Forms::ToolStripMenuItem^ portNameToolStripMenuItem;
-	private: System::Windows::Forms::ToolStripMenuItem^ portSpeedToolStripMenuItem;
-	private: System::Windows::Forms::ToolStripMenuItem^ com1;
-	private: System::Windows::Forms::ToolStripMenuItem^ com2;
-	private: System::Windows::Forms::ToolStripMenuItem^ com3;
-	private: System::Windows::Forms::ToolStripMenuItem^ com4;
-	private: System::Windows::Forms::ToolStripMenuItem^ com5;
-	private: System::Windows::Forms::ToolStripMenuItem^ speed1200;
-	private: System::Windows::Forms::ToolStripMenuItem^ speed2400;
-	private: System::Windows::Forms::ToolStripMenuItem^ speed4800;
-	private: System::Windows::Forms::ToolStripMenuItem^ speed9600;
-	private: System::Windows::Forms::ToolStripMenuItem^ speed19200;
-	private: System::Windows::Forms::ToolStripMenuItem^ speed38400;
-	private: System::Windows::Forms::ToolStripMenuItem^ speed57600;
-	private: System::Windows::Forms::ToolStripMenuItem^ speed115200;
 
 
 
-
-
-
-
-
-	private: System::Windows::Forms::ToolStripMenuItem^ portConnectToolStripMenuItem;
 	private: System::Windows::Forms::StatusStrip^ statusStrip1;
 	private: System::Windows::Forms::ToolStripStatusLabel^ portNameStatusLabel;
 	private: System::Windows::Forms::ToolStripStatusLabel^ portSpeedStatusLabel;
@@ -79,6 +57,23 @@ namespace ComPort {
 
 
 	private: System::Windows::Forms::GroupBox^ groupBoxHight;
+	private: System::Windows::Forms::ToolStripMenuItem^ PortToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^ speedToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^ toConnectToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^ com1ToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^ com2ToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^ com3ToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^ com4ToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^ com5ToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^ toolStripMenuItem1200;
+	private: System::Windows::Forms::ToolStripMenuItem^ toolStripMenuItem2400;
+	private: System::Windows::Forms::ToolStripMenuItem^ toolStripMenuItem4800;
+	private: System::Windows::Forms::ToolStripMenuItem^ toolStripMenuItem9600;
+	private: System::Windows::Forms::ToolStripMenuItem^ toolStripMenuItem19200;
+	private: System::Windows::Forms::ToolStripMenuItem^ toolStripMenuItem38400;
+	private: System::Windows::Forms::ToolStripMenuItem^ toolStripMenuItem57600;
+	private: System::Windows::Forms::ToolStripMenuItem^ toolStripMenuItem115200;
+
 
 
 
@@ -99,23 +94,22 @@ namespace ComPort {
 		void InitializeComponent(void)
 		{
 			this->menuStrip1 = (gcnew System::Windows::Forms::MenuStrip());
-			this->portSettingsToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->portNameToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->com1 = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->com2 = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->com3 = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->com4 = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->com5 = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->portSpeedToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->speed1200 = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->speed2400 = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->speed4800 = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->speed9600 = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->speed19200 = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->speed38400 = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->speed57600 = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->speed115200 = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->portConnectToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->PortToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->com1ToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->com2ToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->com3ToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->com4ToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->com5ToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->speedToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->toolStripMenuItem1200 = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->toolStripMenuItem2400 = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->toolStripMenuItem4800 = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->toolStripMenuItem9600 = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->toolStripMenuItem19200 = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->toolStripMenuItem38400 = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->toolStripMenuItem57600 = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->toolStripMenuItem115200 = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->toConnectToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->statusStrip1 = (gcnew System::Windows::Forms::StatusStrip());
 			this->portNameStatusLabel = (gcnew System::Windows::Forms::ToolStripStatusLabel());
 			this->portSpeedStatusLabel = (gcnew System::Windows::Forms::ToolStripStatusLabel());
@@ -134,140 +128,134 @@ namespace ComPort {
 			// 
 			this->menuStrip1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
 				static_cast<System::Int32>(static_cast<System::Byte>(255)));
-			this->menuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->portSettingsToolStripMenuItem });
+			this->menuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(3) {
+				this->PortToolStripMenuItem,
+					this->speedToolStripMenuItem, this->toConnectToolStripMenuItem
+			});
 			this->menuStrip1->Location = System::Drawing::Point(0, 0);
 			this->menuStrip1->Name = L"menuStrip1";
 			this->menuStrip1->Size = System::Drawing::Size(500, 24);
 			this->menuStrip1->TabIndex = 2;
 			this->menuStrip1->Text = L"menuStrip1";
 			// 
-			// portSettingsToolStripMenuItem
+			// PortToolStripMenuItem
 			// 
-			this->portSettingsToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(3) {
-				this->portNameToolStripMenuItem,
-					this->portSpeedToolStripMenuItem, this->portConnectToolStripMenuItem
+			this->PortToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(5) {
+				this->com1ToolStripMenuItem,
+					this->com2ToolStripMenuItem, this->com3ToolStripMenuItem, this->com4ToolStripMenuItem, this->com5ToolStripMenuItem
 			});
-			this->portSettingsToolStripMenuItem->Name = L"portSettingsToolStripMenuItem";
-			this->portSettingsToolStripMenuItem->Size = System::Drawing::Size(50, 20);
-			this->portSettingsToolStripMenuItem->Text = L"Связь";
+			this->PortToolStripMenuItem->Name = L"PortToolStripMenuItem";
+			this->PortToolStripMenuItem->Size = System::Drawing::Size(47, 20);
+			this->PortToolStripMenuItem->Text = L"Порт";
 			// 
-			// portNameToolStripMenuItem
+			// com1ToolStripMenuItem
 			// 
-			this->portNameToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(5) {
-				this->com1,
-					this->com2, this->com3, this->com4, this->com5
+			this->com1ToolStripMenuItem->Name = L"com1ToolStripMenuItem";
+			this->com1ToolStripMenuItem->Size = System::Drawing::Size(180, 22);
+			this->com1ToolStripMenuItem->Text = L"COM1";
+			this->com1ToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::com1ToolStripMenuItem_Click);
+			// 
+			// com2ToolStripMenuItem
+			// 
+			this->com2ToolStripMenuItem->Name = L"com2ToolStripMenuItem";
+			this->com2ToolStripMenuItem->Size = System::Drawing::Size(180, 22);
+			this->com2ToolStripMenuItem->Text = L"COM2";
+			this->com2ToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::com2ToolStripMenuItem_Click);
+			// 
+			// com3ToolStripMenuItem
+			// 
+			this->com3ToolStripMenuItem->Name = L"com3ToolStripMenuItem";
+			this->com3ToolStripMenuItem->Size = System::Drawing::Size(180, 22);
+			this->com3ToolStripMenuItem->Text = L"COM3";
+			this->com3ToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::com3ToolStripMenuItem_Click);
+			// 
+			// com4ToolStripMenuItem
+			// 
+			this->com4ToolStripMenuItem->Name = L"com4ToolStripMenuItem";
+			this->com4ToolStripMenuItem->Size = System::Drawing::Size(180, 22);
+			this->com4ToolStripMenuItem->Text = L"COM4";
+			this->com4ToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::com4ToolStripMenuItem_Click);
+			// 
+			// com5ToolStripMenuItem
+			// 
+			this->com5ToolStripMenuItem->Name = L"com5ToolStripMenuItem";
+			this->com5ToolStripMenuItem->Size = System::Drawing::Size(180, 22);
+			this->com5ToolStripMenuItem->Text = L"COM5";
+			this->com5ToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::com5ToolStripMenuItem_Click);
+			// 
+			// speedToolStripMenuItem
+			// 
+			this->speedToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(8) {
+				this->toolStripMenuItem1200,
+					this->toolStripMenuItem2400, this->toolStripMenuItem4800, this->toolStripMenuItem9600, this->toolStripMenuItem19200, this->toolStripMenuItem38400,
+					this->toolStripMenuItem57600, this->toolStripMenuItem115200
 			});
-			this->portNameToolStripMenuItem->Name = L"portNameToolStripMenuItem";
-			this->portNameToolStripMenuItem->Size = System::Drawing::Size(144, 22);
-			this->portNameToolStripMenuItem->Text = L"Порт";
+			this->speedToolStripMenuItem->Name = L"speedToolStripMenuItem";
+			this->speedToolStripMenuItem->Size = System::Drawing::Size(71, 20);
+			this->speedToolStripMenuItem->Text = L"Скорость";
 			// 
-			// com1
+			// toolStripMenuItem1200
 			// 
-			this->com1->Name = L"com1";
-			this->com1->Size = System::Drawing::Size(108, 22);
-			this->com1->Text = L"COM1";
-			this->com1->Click += gcnew System::EventHandler(this, &MyForm::com1_Click);
+			this->toolStripMenuItem1200->Name = L"toolStripMenuItem1200";
+			this->toolStripMenuItem1200->Size = System::Drawing::Size(110, 22);
+			this->toolStripMenuItem1200->Text = L"1200";
+			this->toolStripMenuItem1200->Click += gcnew System::EventHandler(this, &MyForm::toolStripMenuItem1200_Click);
 			// 
-			// com2
+			// toolStripMenuItem2400
 			// 
-			this->com2->Name = L"com2";
-			this->com2->Size = System::Drawing::Size(108, 22);
-			this->com2->Text = L"COM2";
-			this->com2->Click += gcnew System::EventHandler(this, &MyForm::com2_Click);
+			this->toolStripMenuItem2400->Name = L"toolStripMenuItem2400";
+			this->toolStripMenuItem2400->Size = System::Drawing::Size(110, 22);
+			this->toolStripMenuItem2400->Text = L"2400";
+			this->toolStripMenuItem2400->Click += gcnew System::EventHandler(this, &MyForm::toolStripMenuItem2400_Click);
 			// 
-			// com3
+			// toolStripMenuItem4800
 			// 
-			this->com3->Name = L"com3";
-			this->com3->Size = System::Drawing::Size(108, 22);
-			this->com3->Text = L"COM3";
-			this->com3->Click += gcnew System::EventHandler(this, &MyForm::com3_Click);
+			this->toolStripMenuItem4800->Name = L"toolStripMenuItem4800";
+			this->toolStripMenuItem4800->Size = System::Drawing::Size(110, 22);
+			this->toolStripMenuItem4800->Text = L"4800";
+			this->toolStripMenuItem4800->Click += gcnew System::EventHandler(this, &MyForm::toolStripMenuItem4800_Click);
 			// 
-			// com4
+			// toolStripMenuItem9600
 			// 
-			this->com4->Name = L"com4";
-			this->com4->Size = System::Drawing::Size(108, 22);
-			this->com4->Text = L"COM4";
-			this->com4->Click += gcnew System::EventHandler(this, &MyForm::com4_Click);
+			this->toolStripMenuItem9600->Name = L"toolStripMenuItem9600";
+			this->toolStripMenuItem9600->Size = System::Drawing::Size(110, 22);
+			this->toolStripMenuItem9600->Text = L"9600";
+			this->toolStripMenuItem9600->Click += gcnew System::EventHandler(this, &MyForm::toolStripMenuItem9600_Click);
 			// 
-			// com5
+			// toolStripMenuItem19200
 			// 
-			this->com5->Name = L"com5";
-			this->com5->Size = System::Drawing::Size(108, 22);
-			this->com5->Text = L"COM5";
-			this->com5->Click += gcnew System::EventHandler(this, &MyForm::com5_Click);
+			this->toolStripMenuItem19200->Name = L"toolStripMenuItem19200";
+			this->toolStripMenuItem19200->Size = System::Drawing::Size(110, 22);
+			this->toolStripMenuItem19200->Text = L"19200";
+			this->toolStripMenuItem19200->Click += gcnew System::EventHandler(this, &MyForm::toolStripMenuItem19200_Click);
 			// 
-			// portSpeedToolStripMenuItem
+			// toolStripMenuItem38400
 			// 
-			this->portSpeedToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(8) {
-				this->speed1200,
-					this->speed2400, this->speed4800, this->speed9600, this->speed19200, this->speed38400, this->speed57600, this->speed115200
-			});
-			this->portSpeedToolStripMenuItem->Name = L"portSpeedToolStripMenuItem";
-			this->portSpeedToolStripMenuItem->Size = System::Drawing::Size(144, 22);
-			this->portSpeedToolStripMenuItem->Text = L"Скорость";
+			this->toolStripMenuItem38400->Name = L"toolStripMenuItem38400";
+			this->toolStripMenuItem38400->Size = System::Drawing::Size(110, 22);
+			this->toolStripMenuItem38400->Text = L"38400";
+			this->toolStripMenuItem38400->Click += gcnew System::EventHandler(this, &MyForm::toolStripMenuItem38400_Click);
 			// 
-			// speed1200
+			// toolStripMenuItem57600
 			// 
-			this->speed1200->Name = L"speed1200";
-			this->speed1200->Size = System::Drawing::Size(110, 22);
-			this->speed1200->Text = L"1200";
-			this->speed1200->Click += gcnew System::EventHandler(this, &MyForm::speed1200_Click);
+			this->toolStripMenuItem57600->Name = L"toolStripMenuItem57600";
+			this->toolStripMenuItem57600->Size = System::Drawing::Size(110, 22);
+			this->toolStripMenuItem57600->Text = L"57600";
+			this->toolStripMenuItem57600->Click += gcnew System::EventHandler(this, &MyForm::toolStripMenuItem57600_Click);
 			// 
-			// speed2400
+			// toolStripMenuItem115200
 			// 
-			this->speed2400->Name = L"speed2400";
-			this->speed2400->Size = System::Drawing::Size(110, 22);
-			this->speed2400->Text = L"2400";
-			this->speed2400->Click += gcnew System::EventHandler(this, &MyForm::speed2400_Click);
+			this->toolStripMenuItem115200->Name = L"toolStripMenuItem115200";
+			this->toolStripMenuItem115200->Size = System::Drawing::Size(110, 22);
+			this->toolStripMenuItem115200->Text = L"115200";
+			this->toolStripMenuItem115200->Click += gcnew System::EventHandler(this, &MyForm::toolStripMenuItem115200_Click);
 			// 
-			// speed4800
+			// toConnectToolStripMenuItem
 			// 
-			this->speed4800->Name = L"speed4800";
-			this->speed4800->Size = System::Drawing::Size(110, 22);
-			this->speed4800->Text = L"4800";
-			this->speed4800->Click += gcnew System::EventHandler(this, &MyForm::speed4800_Click);
-			// 
-			// speed9600
-			// 
-			this->speed9600->Name = L"speed9600";
-			this->speed9600->Size = System::Drawing::Size(110, 22);
-			this->speed9600->Text = L"9600";
-			this->speed9600->Click += gcnew System::EventHandler(this, &MyForm::speed9600_Click);
-			// 
-			// speed19200
-			// 
-			this->speed19200->Name = L"speed19200";
-			this->speed19200->Size = System::Drawing::Size(110, 22);
-			this->speed19200->Text = L"19200";
-			this->speed19200->Click += gcnew System::EventHandler(this, &MyForm::speed19200_Click);
-			// 
-			// speed38400
-			// 
-			this->speed38400->Name = L"speed38400";
-			this->speed38400->Size = System::Drawing::Size(110, 22);
-			this->speed38400->Text = L"38400";
-			this->speed38400->Click += gcnew System::EventHandler(this, &MyForm::speed38400_Click);
-			// 
-			// speed57600
-			// 
-			this->speed57600->Name = L"speed57600";
-			this->speed57600->Size = System::Drawing::Size(110, 22);
-			this->speed57600->Text = L"57600";
-			this->speed57600->Click += gcnew System::EventHandler(this, &MyForm::speed57600_Click);
-			// 
-			// speed115200
-			// 
-			this->speed115200->Name = L"speed115200";
-			this->speed115200->Size = System::Drawing::Size(110, 22);
-			this->speed115200->Text = L"115200";
-			this->speed115200->Click += gcnew System::EventHandler(this, &MyForm::speed115200_Click);
-			// 
-			// portConnectToolStripMenuItem
-			// 
-			this->portConnectToolStripMenuItem->Name = L"portConnectToolStripMenuItem";
-			this->portConnectToolStripMenuItem->Size = System::Drawing::Size(144, 22);
-			this->portConnectToolStripMenuItem->Text = L"Подключить";
-			this->portConnectToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::portConnectToolStripMenuItem_Click);
+			this->toConnectToolStripMenuItem->Name = L"toConnectToolStripMenuItem";
+			this->toConnectToolStripMenuItem->Size = System::Drawing::Size(89, 20);
+			this->toConnectToolStripMenuItem->Text = L"Подключить";
+			this->toConnectToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::toConnectToolStripMenuItem_Click);
 			// 
 			// statusStrip1
 			// 
@@ -350,7 +338,7 @@ namespace ComPort {
 			this->groupBoxHight->Controls->Add(this->labelHightSet);
 			this->groupBoxHight->Controls->Add(this->textBoxHightInput);
 			this->groupBoxHight->Controls->Add(this->buttonHightSet);
-			this->groupBoxHight->Location = System::Drawing::Point(0, 35);
+			this->groupBoxHight->Location = System::Drawing::Point(0, 36);
 			this->groupBoxHight->Name = L"groupBoxHight";
 			this->groupBoxHight->Size = System::Drawing::Size(500, 99);
 			this->groupBoxHight->TabIndex = 8;
@@ -382,20 +370,20 @@ namespace ComPort {
 
 	public: void outThread();
 
-	private: System::Void com1_Click(System::Object^ sender, System::EventArgs^ e);
-	private: System::Void com2_Click(System::Object^ sender, System::EventArgs^ e);
-	private: System::Void com3_Click(System::Object^ sender, System::EventArgs^ e);
-	private: System::Void com4_Click(System::Object^ sender, System::EventArgs^ e);
-	private: System::Void com5_Click(System::Object^ sender, System::EventArgs^ e);
-	private: System::Void speed1200_Click(System::Object^ sender, System::EventArgs^ e);
-	private: System::Void speed2400_Click(System::Object^ sender, System::EventArgs^ e);
-	private: System::Void speed4800_Click(System::Object^ sender, System::EventArgs^ e);
-	private: System::Void speed9600_Click(System::Object^ sender, System::EventArgs^ e);
-	private: System::Void speed19200_Click(System::Object^ sender, System::EventArgs^ e);
-	private: System::Void speed38400_Click(System::Object^ sender, System::EventArgs^ e);
-	private: System::Void speed57600_Click(System::Object^ sender, System::EventArgs^ e);
-	private: System::Void speed115200_Click(System::Object^ sender, System::EventArgs^ e);
-	private: System::Void portConnectToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e);
+	private: System::Void com1ToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e);
+	private: System::Void com2ToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e);
+	private: System::Void com3ToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e);
+	private: System::Void com4ToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e);
+	private: System::Void com5ToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e);
+	private: System::Void toolStripMenuItem1200_Click(System::Object^ sender, System::EventArgs^ e);
+	private: System::Void toolStripMenuItem2400_Click(System::Object^ sender, System::EventArgs^ e);
+	private: System::Void toolStripMenuItem4800_Click(System::Object^ sender, System::EventArgs^ e);
+	private: System::Void toolStripMenuItem9600_Click(System::Object^ sender, System::EventArgs^ e);
+	private: System::Void toolStripMenuItem19200_Click(System::Object^ sender, System::EventArgs^ e);
+	private: System::Void toolStripMenuItem38400_Click(System::Object^ sender, System::EventArgs^ e);
+	private: System::Void toolStripMenuItem57600_Click(System::Object^ sender, System::EventArgs^ e);
+	private: System::Void toolStripMenuItem115200_Click(System::Object^ sender, System::EventArgs^ e);
+	private: System::Void toConnectToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e);
 };
 
 
