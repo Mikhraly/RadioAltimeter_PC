@@ -84,6 +84,7 @@ System::Void ComPort::MyForm::toolStripMenuItem115200_Click(System::Object^ send
 	mySerialPort->BaudRate = 115200;
 	this->portSpeedStatusLabel->Text = L"115200";
 }
+
 System::Void ComPort::MyForm::toConnectToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
 	mySerialPort->Open();
 
@@ -97,4 +98,26 @@ System::Void ComPort::MyForm::toConnectToolStripMenuItem_Click(System::Object^ s
 		Thread^ outThread = gcnew Thread(gcnew ThreadStart(this, &MyForm::outThread));
 		outThread->Start();
 	}
+}
+
+
+System::Void ComPort::MyForm::buttonHightSet_Click(System::Object^ sender, System::EventArgs^ e) {
+	System::String^ hight = this->textBoxHightInput->Text;
+	this->labelHightSet->Text = hight;
+}
+
+System::Void ComPort::MyForm::textBoxHightInput_KeyDown(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) {
+	if (e->KeyCode == Keys::Enter)
+		this->buttonHightSet_Click(sender, e);
+}
+
+System::Void ComPort::MyForm::textBoxHightInput_MouseWheel(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
+	System::String^ inputString = this->textBoxHightInput->Text;
+	System::Double inputDouble = System::Convert::ToDouble(inputString);
+	if (e->Delta > 0)
+		inputDouble++;
+	else
+		inputDouble--;
+	this->textBoxHightInput->Text = Convert::ToString(inputDouble);
+	this->buttonHightSet_Click(sender, e);
 }

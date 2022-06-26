@@ -80,6 +80,8 @@ namespace ComPort {
 
 
 
+
+
 		/// <summary>
 		/// Обязательная переменная конструктора.
 		/// </summary>
@@ -151,35 +153,35 @@ namespace ComPort {
 			// com1ToolStripMenuItem
 			// 
 			this->com1ToolStripMenuItem->Name = L"com1ToolStripMenuItem";
-			this->com1ToolStripMenuItem->Size = System::Drawing::Size(180, 22);
+			this->com1ToolStripMenuItem->Size = System::Drawing::Size(108, 22);
 			this->com1ToolStripMenuItem->Text = L"COM1";
 			this->com1ToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::com1ToolStripMenuItem_Click);
 			// 
 			// com2ToolStripMenuItem
 			// 
 			this->com2ToolStripMenuItem->Name = L"com2ToolStripMenuItem";
-			this->com2ToolStripMenuItem->Size = System::Drawing::Size(180, 22);
+			this->com2ToolStripMenuItem->Size = System::Drawing::Size(108, 22);
 			this->com2ToolStripMenuItem->Text = L"COM2";
 			this->com2ToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::com2ToolStripMenuItem_Click);
 			// 
 			// com3ToolStripMenuItem
 			// 
 			this->com3ToolStripMenuItem->Name = L"com3ToolStripMenuItem";
-			this->com3ToolStripMenuItem->Size = System::Drawing::Size(180, 22);
+			this->com3ToolStripMenuItem->Size = System::Drawing::Size(108, 22);
 			this->com3ToolStripMenuItem->Text = L"COM3";
 			this->com3ToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::com3ToolStripMenuItem_Click);
 			// 
 			// com4ToolStripMenuItem
 			// 
 			this->com4ToolStripMenuItem->Name = L"com4ToolStripMenuItem";
-			this->com4ToolStripMenuItem->Size = System::Drawing::Size(180, 22);
+			this->com4ToolStripMenuItem->Size = System::Drawing::Size(108, 22);
 			this->com4ToolStripMenuItem->Text = L"COM4";
 			this->com4ToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::com4ToolStripMenuItem_Click);
 			// 
 			// com5ToolStripMenuItem
 			// 
 			this->com5ToolStripMenuItem->Name = L"com5ToolStripMenuItem";
-			this->com5ToolStripMenuItem->Size = System::Drawing::Size(180, 22);
+			this->com5ToolStripMenuItem->Size = System::Drawing::Size(108, 22);
 			this->com5ToolStripMenuItem->Text = L"COM5";
 			this->com5ToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::com5ToolStripMenuItem_Click);
 			// 
@@ -298,6 +300,8 @@ namespace ComPort {
 			this->textBoxHightInput->Size = System::Drawing::Size(100, 26);
 			this->textBoxHightInput->TabIndex = 4;
 			this->textBoxHightInput->Text = L"5";
+			this->textBoxHightInput->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &MyForm::textBoxHightInput_KeyDown);
+			this->textBoxHightInput->MouseWheel += gcnew System::Windows::Forms::MouseEventHandler(this, &MyForm::textBoxHightInput_MouseWheel);
 			// 
 			// labelHightInput
 			// 
@@ -320,6 +324,7 @@ namespace ComPort {
 			this->buttonHightSet->TabIndex = 6;
 			this->buttonHightSet->Text = L">> Отправить >>";
 			this->buttonHightSet->UseVisualStyleBackColor = true;
+			this->buttonHightSet->Click += gcnew System::EventHandler(this, &MyForm::buttonHightSet_Click);
 			// 
 			// labelHightSet
 			// 
@@ -384,8 +389,11 @@ namespace ComPort {
 	private: System::Void toolStripMenuItem57600_Click(System::Object^ sender, System::EventArgs^ e);
 	private: System::Void toolStripMenuItem115200_Click(System::Object^ sender, System::EventArgs^ e);
 	private: System::Void toConnectToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e);
-};
 
+	private: System::Void buttonHightSet_Click(System::Object^ sender, System::EventArgs^ e);
+	private: System::Void textBoxHightInput_KeyDown(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e);
+	private: System::Void textBoxHightInput_MouseWheel(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e);
+};
 
 
 }
