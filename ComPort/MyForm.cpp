@@ -1,10 +1,16 @@
 #include "MyForm.h"
-#include "Port.h"
 
 using namespace System;
 using namespace System::Windows::Forms;
 
+RadioAltimeter altimeter;
 bool dataUpdated = false;
+unsigned char testByte = 0;
+bool flagAbortOutThread = false;
+
+struct Flag {
+	bool outPermission;
+} flag = {false};
 
 int main() {
 	Application::EnableVisualStyles();
@@ -22,14 +28,16 @@ void ComPort::MyForm::outThread() {
 	array<unsigned char>^ buffer = { 0x7E, 0xAA, 0xFF };
 
 	while (true) {
-		if (!dataUpdated) {
+		if (dataUpdated) {
+			buffer[1] = testByte;
+			dataUpdated = false;
+		}
+		if (flag.outPermission) {
 			this->mySerialPort->Write(buffer, 0, 3);
-			Thread::Sleep(0);
+			Thread::Sleep(100);
 		}
 	}
 }
-
-
 
 
 System::Void ComPort::MyForm::com1ToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
@@ -86,24 +94,40 @@ System::Void ComPort::MyForm::toolStripMenuItem115200_Click(System::Object^ send
 }
 
 System::Void ComPort::MyForm::toConnectToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
-	mySerialPort->Open();
+	Thread^ outThread = gcnew Thread(gcnew ThreadStart(this, &MyForm::outThread));
+	
+	if (!mySerialPort->IsOpen) {
+		mySerialPort->Open();
 
-	if (mySerialPort->IsOpen) {
 		this->isConnectStatusLabel->Text = L"Подключено";
-		this->statusStrip1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(
-			static_cast<System::Byte>(83)),
-			static_cast<System::Int32>(static_cast<System::Byte>(177)),
-			static_cast<System::Int32>(static_cast<System::Byte>(84)));
+		this->statusStrip1->BackColor = System::Drawing::Color::FromArgb(
+				static_cast<System::Int32>(static_cast<System::Byte>(83)),
+				static_cast<System::Int32>(static_cast<System::Byte>(177)),
+				static_cast<System::Int32>(static_cast<System::Byte>(84)));
 
-		Thread^ outThread = gcnew Thread(gcnew ThreadStart(this, &MyForm::outThread));
 		outThread->Start();
+		flag.outPermission = true;
+	} else {
+		flag.outPermission = false;
+
+		this->isConnectStatusLabel->Text = L"Отключено";
+		this->statusStrip1->BackColor = System::Drawing::Color::FromArgb(
+			static_cast<System::Int32>(static_cast<System::Byte>(205)),
+			static_cast<System::Int32>(static_cast<System::Byte>(215)),
+			static_cast<System::Int32>(static_cast<System::Byte>(61)));
+
+		mySerialPort->Close();
 	}
 }
 
 
 System::Void ComPort::MyForm::buttonHightSet_Click(System::Object^ sender, System::EventArgs^ e) {
 	System::String^ hight = this->textBoxHightInput->Text;
+	altimeter.setDistance(static_cast<float>(Convert::ToDouble(hight)));
 	this->labelHightSet->Text = hight;
+	
+	unsigned int word = altimeter.getWord();
+	// TO DO - создать класс Massage, который будет содержать структуру отправляемого и принимаемого сообщения
 }
 
 System::Void ComPort::MyForm::textBoxHightInput_KeyDown(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) {
@@ -118,6 +142,14 @@ System::Void ComPort::MyForm::textBoxHightInput_MouseWheel(System::Object^ sende
 		inputDouble++;
 	else
 		inputDouble--;
+
+	if (e->Delta > 0)
+		testByte++;
+	else
+		testByte--;
+	while (dataUpdated);
+	//dataUpdated = true;
+
 	this->textBoxHightInput->Text = Convert::ToString(inputDouble);
 	this->buttonHightSet_Click(sender, e);
 }
