@@ -144,44 +144,43 @@ namespace ComPort {
 			// com1ToolStripMenuItem
 			// 
 			this->com1ToolStripMenuItem->Name = L"com1ToolStripMenuItem";
-			this->com1ToolStripMenuItem->Size = System::Drawing::Size(180, 22);
+			this->com1ToolStripMenuItem->Size = System::Drawing::Size(108, 22);
 			this->com1ToolStripMenuItem->Text = L"COM1";
 			this->com1ToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::com1ToolStripMenuItem_Click);
 			// 
 			// com2ToolStripMenuItem
 			// 
 			this->com2ToolStripMenuItem->Name = L"com2ToolStripMenuItem";
-			this->com2ToolStripMenuItem->Size = System::Drawing::Size(180, 22);
+			this->com2ToolStripMenuItem->Size = System::Drawing::Size(108, 22);
 			this->com2ToolStripMenuItem->Text = L"COM2";
 			this->com2ToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::com2ToolStripMenuItem_Click);
 			// 
 			// com3ToolStripMenuItem
 			// 
 			this->com3ToolStripMenuItem->Name = L"com3ToolStripMenuItem";
-			this->com3ToolStripMenuItem->Size = System::Drawing::Size(180, 22);
+			this->com3ToolStripMenuItem->Size = System::Drawing::Size(108, 22);
 			this->com3ToolStripMenuItem->Text = L"COM3";
 			this->com3ToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::com3ToolStripMenuItem_Click);
 			// 
 			// com4ToolStripMenuItem
 			// 
 			this->com4ToolStripMenuItem->Name = L"com4ToolStripMenuItem";
-			this->com4ToolStripMenuItem->Size = System::Drawing::Size(180, 22);
+			this->com4ToolStripMenuItem->Size = System::Drawing::Size(108, 22);
 			this->com4ToolStripMenuItem->Text = L"COM4";
 			this->com4ToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::com4ToolStripMenuItem_Click);
 			// 
 			// com5ToolStripMenuItem
 			// 
 			this->com5ToolStripMenuItem->Name = L"com5ToolStripMenuItem";
-			this->com5ToolStripMenuItem->Size = System::Drawing::Size(180, 22);
+			this->com5ToolStripMenuItem->Size = System::Drawing::Size(108, 22);
 			this->com5ToolStripMenuItem->Text = L"COM5";
 			this->com5ToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::com5ToolStripMenuItem_Click);
 			// 
 			// speedToolStripMenuItem
 			// 
 			this->speedToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(8) {
-					this->toolStripMenuItem1200, this->toolStripMenuItem2400,
-					this->toolStripMenuItem4800, this->toolStripMenuItem9600,
-					this->toolStripMenuItem19200, this->toolStripMenuItem38400,
+				this->toolStripMenuItem1200,
+					this->toolStripMenuItem2400, this->toolStripMenuItem4800, this->toolStripMenuItem9600, this->toolStripMenuItem19200, this->toolStripMenuItem38400,
 					this->toolStripMenuItem57600, this->toolStripMenuItem115200
 			});
 			this->speedToolStripMenuItem->Name = L"speedToolStripMenuItem";

@@ -18,10 +18,10 @@
     <ClCompile Include="MyForm.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Port.cpp">
+    <ClCompile Include="RadioAltimeter.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="RadioAltimeter.cpp">
+    <ClCompile Include="Message.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
@@ -29,10 +29,10 @@
     <ClInclude Include="MyForm.h">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
-    <ClInclude Include="Port.h">
+    <ClInclude Include="RadioAltimeter.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="RadioAltimeter.h">
+    <ClInclude Include="Message.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
