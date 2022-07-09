@@ -2,7 +2,6 @@
 
 #include <array>
 #include <string>
-#include "Port.h"
 #include "RadioAltimeter.h"
 
 namespace ComPort {
@@ -35,8 +34,7 @@ namespace ComPort {
 			}
 		}
 
-
-
+	private: Threading::Mutex mutex;
 	private: SerialPort^ mySerialPort = gcnew SerialPort("COM1", 115200, Parity::None, 8, StopBits::One);
 
 	private: System::Windows::Forms::MenuStrip^ menuStrip1;
@@ -181,8 +179,9 @@ namespace ComPort {
 			// speedToolStripMenuItem
 			// 
 			this->speedToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(8) {
-				this->toolStripMenuItem1200,
-					this->toolStripMenuItem2400, this->toolStripMenuItem4800, this->toolStripMenuItem9600, this->toolStripMenuItem19200, this->toolStripMenuItem38400,
+					this->toolStripMenuItem1200, this->toolStripMenuItem2400,
+					this->toolStripMenuItem4800, this->toolStripMenuItem9600,
+					this->toolStripMenuItem19200, this->toolStripMenuItem38400,
 					this->toolStripMenuItem57600, this->toolStripMenuItem115200
 			});
 			this->speedToolStripMenuItem->Name = L"speedToolStripMenuItem";
@@ -367,6 +366,7 @@ namespace ComPort {
 #pragma endregion
 
 	public: void outThread();
+	public: void inThread();
 
 	private: System::Void com1ToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e);
 	private: System::Void com2ToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e);
