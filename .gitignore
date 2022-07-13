@@ -1,4 +1,7 @@
 .vs
 Debug/*
 !Debug/*.exe
-ComPort/Debug/
+x64/*
+!x64/Debug/*.exe
+ComPort/Debug
+ComPort/x64

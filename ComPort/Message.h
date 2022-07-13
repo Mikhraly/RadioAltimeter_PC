@@ -1,20 +1,21 @@
 #pragma once
+#include <stdint.h>
 #include "RadioAltimeter.h"
 
 class Message final {
 public:
-	const unsigned char& getOutMessage(RadioAltimeter& altimeter);
+	void setOutData(const unsigned int& word, const bool serviceability, const bool permissionToUse);
+	const uint8_t& getOutMessage();
 
 private:
-	unsigned char outMessage[7] = {0};
+	uint8_t outMessage[7] = {0};
 	
-	struct OutStruct {
-		unsigned char head = 0x7E;
+	struct OutData {
 		unsigned int word = 0;
 		bool serviceability = false;
 		bool permissionToUse = false;
-		unsigned char crc = 0xFF;
-	} outStruct;
+	} outData;
 
-	const unsigned char& buildOutMessage();
+	uint8_t crc8_ccitt_calculate(const uint8_t* array, uint8_t num);
+	uint8_t crc8_ccitt_update(uint8_t inCrc, uint8_t inData);
 };

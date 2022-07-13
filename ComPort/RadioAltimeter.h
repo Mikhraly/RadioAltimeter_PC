@@ -1,3 +1,5 @@
+#pragma once
+
 class RadioAltimeter final {
 public:
     RadioAltimeter();
