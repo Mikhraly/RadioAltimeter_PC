@@ -20,8 +20,8 @@ struct Data {
 
 struct Flag {
 	bool outMessageChanged;
-	bool outCircleWorks;
-	bool inCircleWorks;
+	bool outThreadWorks;
+	bool inThreadWorks;
 	bool isAltimeterFree;
 	bool isDataFree;
 	bool isWordChanged;
@@ -41,17 +41,18 @@ int main() {
 /// Поток передачи данных в COM-порт
 /// </summary>
 void ComPort::MyForm::outThread() {
-	array<unsigned char>^ outMessage = { 0x7E, 0xAA, 0xFF };
+	array<unsigned char>^ outMessage = {0,0,0,0,0,0,0};
 
-	unsigned char testByte = 0xAA;
-
-	while (flag.outCircleWorks) {
-		if (flag.isWordChanged) {
-			flag.isWordChanged = false;
-			outMessage[1] = data.testByte;
+	while (flag.outThreadWorks) {
+		this->mutex.WaitOne();
+		if (flag.outMessageChanged) {
+			for (int i = 0; i < 7; i++)
+				outMessage[i] = buffer.outMessage[i];
+			flag.outMessageChanged = false;
 		}
+		this->mutex.ReleaseMutex();
 
-		this->mySerialPort->Write(outMessage, 0, 3);
+		this->mySerialPort->Write(outMessage, 0, 7);
 		Thread::Sleep(10);
 	}
 }
@@ -59,7 +60,7 @@ void ComPort::MyForm::outThread() {
 void ComPort::MyForm::inThread() {
 	array<unsigned char>^ inMessage = { 0, 0, 0 };
 
-	while (flag.inCircleWorks) {
+	while (flag.inThreadWorks) {
 		//this->mySerialPort->Read();
 
 		//this->mutex.WaitOne();
@@ -138,13 +139,13 @@ System::Void ComPort::MyForm::toConnectToolStripMenuItem_Click(System::Object^ s
 				static_cast<System::Int32>(static_cast<System::Byte>(177)),
 				static_cast<System::Int32>(static_cast<System::Byte>(84)));
 
-		flag.outCircleWorks = true;
-		flag.inCircleWorks = true;
+		flag.outThreadWorks = true;
+		flag.inThreadWorks = true;
 		outThread->Start();
 		inThread->Start();
 	} else {
-		flag.outCircleWorks = false;
-		flag.inCircleWorks = false;
+		flag.outThreadWorks = false;
+		flag.inThreadWorks = false;
 		
 		this->isConnectStatusLabel->Text = L"Отключено";
 		this->statusStrip1->BackColor = System::Drawing::Color::FromArgb(
@@ -177,7 +178,7 @@ System::Void ComPort::MyForm::buttonHightSet_Click(System::Object^ sender, Syste
 
 	this->mutex.WaitOne();
 	for (int i = 0; i < 7; i++)
-		buffer.outMessage[0] = outArray[0];
+		buffer.outMessage[i] = outArray[i];
 	flag.outMessageChanged = true;
 	this->mutex.ReleaseMutex();
 }
