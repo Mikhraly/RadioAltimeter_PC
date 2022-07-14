@@ -70,6 +70,10 @@ namespace ComPort {
 	private: System::Windows::Forms::ToolStripMenuItem^ toolStripMenuItem38400;
 	private: System::Windows::Forms::ToolStripMenuItem^ toolStripMenuItem57600;
 	private: System::Windows::Forms::ToolStripMenuItem^ toolStripMenuItem115200;
+	private: System::Windows::Forms::CheckBox^ checkBoxServiceability;
+	private: System::Windows::Forms::CheckBox^ checkBoxPUI;
+
+
 
 
 
@@ -113,6 +117,8 @@ namespace ComPort {
 			this->buttonHightSet = (gcnew System::Windows::Forms::Button());
 			this->labelHightSet = (gcnew System::Windows::Forms::Label());
 			this->groupBoxHight = (gcnew System::Windows::Forms::GroupBox());
+			this->checkBoxServiceability = (gcnew System::Windows::Forms::CheckBox());
+			this->checkBoxPUI = (gcnew System::Windows::Forms::CheckBox());
 			this->menuStrip1->SuspendLayout();
 			this->statusStrip1->SuspendLayout();
 			this->groupBoxHight->SuspendLayout();
@@ -128,7 +134,7 @@ namespace ComPort {
 			});
 			this->menuStrip1->Location = System::Drawing::Point(0, 0);
 			this->menuStrip1->Name = L"menuStrip1";
-			this->menuStrip1->Size = System::Drawing::Size(500, 24);
+			this->menuStrip1->Size = System::Drawing::Size(484, 24);
 			this->menuStrip1->TabIndex = 2;
 			this->menuStrip1->Text = L"menuStrip1";
 			// 
@@ -259,9 +265,10 @@ namespace ComPort {
 				this->portNameStatusLabel,
 					this->portSpeedStatusLabel, this->isConnectStatusLabel
 			});
-			this->statusStrip1->Location = System::Drawing::Point(0, 378);
+			this->statusStrip1->Location = System::Drawing::Point(0, 239);
 			this->statusStrip1->Name = L"statusStrip1";
-			this->statusStrip1->Size = System::Drawing::Size(500, 22);
+			this->statusStrip1->Size = System::Drawing::Size(484, 22);
+			this->statusStrip1->SizingGrip = false;
 			this->statusStrip1->TabIndex = 3;
 			this->statusStrip1->Text = L"statusStrip1";
 			// 
@@ -342,17 +349,51 @@ namespace ComPort {
 			this->groupBoxHight->TabStop = false;
 			this->groupBoxHight->Text = L"Текущая высота в метрах";
 			// 
+			// checkBoxServiceability
+			// 
+			this->checkBoxServiceability->AutoSize = true;
+			this->checkBoxServiceability->Checked = true;
+			this->checkBoxServiceability->CheckState = System::Windows::Forms::CheckState::Checked;
+			this->checkBoxServiceability->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular,
+				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(204)));
+			this->checkBoxServiceability->Location = System::Drawing::Point(24, 153);
+			this->checkBoxServiceability->Name = L"checkBoxServiceability";
+			this->checkBoxServiceability->Size = System::Drawing::Size(158, 21);
+			this->checkBoxServiceability->TabIndex = 9;
+			this->checkBoxServiceability->Text = L"Работоспособность";
+			this->checkBoxServiceability->UseVisualStyleBackColor = true;
+			this->checkBoxServiceability->CheckedChanged += gcnew System::EventHandler(this, &MyForm::checkBoxServiceability_CheckedChanged);
+			// 
+			// checkBoxPUI
+			// 
+			this->checkBoxPUI->AutoSize = true;
+			this->checkBoxPUI->Checked = true;
+			this->checkBoxPUI->CheckState = System::Windows::Forms::CheckState::Checked;
+			this->checkBoxPUI->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->checkBoxPUI->Location = System::Drawing::Point(24, 180);
+			this->checkBoxPUI->Name = L"checkBoxPUI";
+			this->checkBoxPUI->Size = System::Drawing::Size(302, 21);
+			this->checkBoxPUI->TabIndex = 10;
+			this->checkBoxPUI->Text = L"Разрешение использования информации";
+			this->checkBoxPUI->UseVisualStyleBackColor = true;
+			this->checkBoxPUI->CheckedChanged += gcnew System::EventHandler(this, &MyForm::checkBoxPUI_CheckedChanged);
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(500, 400);
+			this->ClientSize = System::Drawing::Size(484, 261);
+			this->Controls->Add(this->checkBoxPUI);
+			this->Controls->Add(this->checkBoxServiceability);
 			this->Controls->Add(this->groupBoxHight);
 			this->Controls->Add(this->statusStrip1);
 			this->Controls->Add(this->menuStrip1);
+			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedDialog;
 			this->MainMenuStrip = this->menuStrip1;
+			this->MaximizeBox = false;
 			this->Name = L"MyForm";
-			this->Text = L"MyForm";
+			this->Text = L"Имитатор радиовысотомера А-053";
 			this->menuStrip1->ResumeLayout(false);
 			this->menuStrip1->PerformLayout();
 			this->statusStrip1->ResumeLayout(false);
@@ -386,6 +427,8 @@ namespace ComPort {
 	private: System::Void buttonHightSet_Click(System::Object^ sender, System::EventArgs^ e);
 	private: System::Void textBoxHightInput_KeyDown(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e);
 	private: System::Void textBoxHightInput_MouseWheel(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e);
+	private: System::Void checkBoxServiceability_CheckedChanged(System::Object^ sender, System::EventArgs^ e);
+	private: System::Void checkBoxPUI_CheckedChanged(System::Object^ sender, System::EventArgs^ e);
 };
 
 

@@ -13,19 +13,11 @@ struct Buffer {
 	unsigned char inMessage[3];
 } buffer = { 0, 0 };
 
-struct Data {
-	unsigned char testByte;
-	int word;
-} data = {0};
-
 struct Flag {
 	bool outMessageChanged;
 	bool outThreadWorks;
 	bool inThreadWorks;
-	bool isAltimeterFree;
-	bool isDataFree;
-	bool isWordChanged;
-} flag = {false, false, false, true, true, false};
+} flag = {false, false, false};
 
 
 int main() {
@@ -197,4 +189,12 @@ System::Void ComPort::MyForm::textBoxHightInput_MouseWheel(System::Object^ sende
 		hightDouble--;
 	this->textBoxHightInput->Text = System::Convert::ToString(hightDouble);
 	this->buttonHightSet_Click(sender, e);
+}
+
+System::Void ComPort::MyForm::checkBoxServiceability_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+
+}
+
+System::Void ComPort::MyForm::checkBoxPUI_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+
 }
