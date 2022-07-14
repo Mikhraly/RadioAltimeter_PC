@@ -6,6 +6,12 @@ using namespace System::Threading;
 
 
 RadioAltimeter altimeter;
+MyUtil::Message message;
+
+struct Buffer {
+	unsigned char outMessage[7];
+	unsigned char inMessage[3];
+} buffer = { 0, 0 };
 
 struct Data {
 	unsigned char testByte;
@@ -13,12 +19,13 @@ struct Data {
 } data = {0};
 
 struct Flag {
+	bool outMessageChanged;
 	bool outCircleWorks;
 	bool inCircleWorks;
 	bool isAltimeterFree;
 	bool isDataFree;
 	bool isWordChanged;
-} flag = {false, false, true, true, false};
+} flag = {false, false, false, true, true, false};
 
 
 int main() {
@@ -151,27 +158,28 @@ System::Void ComPort::MyForm::toConnectToolStripMenuItem_Click(System::Object^ s
 
 
 System::Void ComPort::MyForm::buttonHightSet_Click(System::Object^ sender, System::EventArgs^ e) {
-	System::String^ hight = this->textBoxHightInput->Text;
-	this->labelHightSet->Text = hight;
+	System::String^ hightString = this->textBoxHightInput->Text;
+	System::Double hightDouble = System::Convert::ToDouble(hightString);
+	if (hightDouble < 0) {
+		hightDouble = 0;
+		hightString = "0";
+	} else if (hightDouble > 1500) {
+		hightDouble = 1500.0;
+		hightString = "1500";
+	}
+	this->textBoxHightInput->Text = hightString;
+	this->labelHightSet->Text = hightString;
 
-	altimeter.setDistance(static_cast<float>(Convert::ToDouble(hight)));
-	data.word = altimeter.getWord();
-	data.testByte++;
-	flag.isWordChanged = true;
+	altimeter.setDistance(hightDouble);
+	unsigned int word = altimeter.getWord();
+	message.setOutData(word);
+	const unsigned char* outArray = message.getOutMessage();
 
-	/*
-	while (!flag.isAltimeterFree);
-	flag.isAltimeterFree = false;
-	altimeter.setDistance(static_cast<float>(Convert::ToDouble(hight)));
-	while (!flag.isDataFree);
-	flag.isDataFree = false;
-	data.word = altimeter.getWord();
-	flag.isDataFree = true;
-	flag.isAltimeterFree = true;
-	
-	flag.isWordChanged = true;
-	*/
-	// TO DO - создать класс Massage, который будет содержать структуру отправляемого и принимаемого сообщения
+	this->mutex.WaitOne();
+	for (int i = 0; i < 7; i++)
+		buffer.outMessage[0] = outArray[0];
+	flag.outMessageChanged = true;
+	this->mutex.ReleaseMutex();
 }
 
 System::Void ComPort::MyForm::textBoxHightInput_KeyDown(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) {
@@ -180,20 +188,12 @@ System::Void ComPort::MyForm::textBoxHightInput_KeyDown(System::Object^ sender, 
 }
 
 System::Void ComPort::MyForm::textBoxHightInput_MouseWheel(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
-	System::String^ inputString = this->textBoxHightInput->Text;
-	System::Double inputDouble = System::Convert::ToDouble(inputString);
+	System::String^ hightString = this->textBoxHightInput->Text;
+	System::Double hightDouble = System::Convert::ToDouble(hightString);
 	if (e->Delta > 0)
-		inputDouble++;
+		hightDouble++;
 	else
-		inputDouble--;
-
-	/*if (e->Delta > 0)
-		testByte++;
-	else
-		testByte--;*/
-	while (flag.isWordChanged);
-	//dataUpdated = true;
-
-	this->textBoxHightInput->Text = Convert::ToString(inputDouble);
+		hightDouble--;
+	this->textBoxHightInput->Text = System::Convert::ToString(hightDouble);
 	this->buttonHightSet_Click(sender, e);
 }

@@ -3,6 +3,7 @@
 #include <array>
 #include <string>
 #include "RadioAltimeter.h"
+#include "Message.h"
 
 namespace ComPort {
 
