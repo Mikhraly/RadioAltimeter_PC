@@ -406,30 +406,29 @@ namespace ComPort {
 		}
 #pragma endregion
 
-	public: void outThread();
-	public: void inThread();
+		public: void outThread();
+		public: void inThread();
 
-	private: System::Void com1ToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e);
-	private: System::Void com2ToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e);
-	private: System::Void com3ToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e);
-	private: System::Void com4ToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e);
-	private: System::Void com5ToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e);
-	private: System::Void toolStripMenuItem1200_Click(System::Object^ sender, System::EventArgs^ e);
-	private: System::Void toolStripMenuItem2400_Click(System::Object^ sender, System::EventArgs^ e);
-	private: System::Void toolStripMenuItem4800_Click(System::Object^ sender, System::EventArgs^ e);
-	private: System::Void toolStripMenuItem9600_Click(System::Object^ sender, System::EventArgs^ e);
-	private: System::Void toolStripMenuItem19200_Click(System::Object^ sender, System::EventArgs^ e);
-	private: System::Void toolStripMenuItem38400_Click(System::Object^ sender, System::EventArgs^ e);
-	private: System::Void toolStripMenuItem57600_Click(System::Object^ sender, System::EventArgs^ e);
-	private: System::Void toolStripMenuItem115200_Click(System::Object^ sender, System::EventArgs^ e);
-	private: System::Void toConnectToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e);
+		private: System::Void com1ToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e);
+		private: System::Void com2ToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e);
+		private: System::Void com3ToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e);
+		private: System::Void com4ToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e);
+		private: System::Void com5ToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e);
+		private: System::Void toolStripMenuItem1200_Click(System::Object^ sender, System::EventArgs^ e);
+		private: System::Void toolStripMenuItem2400_Click(System::Object^ sender, System::EventArgs^ e);
+		private: System::Void toolStripMenuItem4800_Click(System::Object^ sender, System::EventArgs^ e);
+		private: System::Void toolStripMenuItem9600_Click(System::Object^ sender, System::EventArgs^ e);
+		private: System::Void toolStripMenuItem19200_Click(System::Object^ sender, System::EventArgs^ e);
+		private: System::Void toolStripMenuItem38400_Click(System::Object^ sender, System::EventArgs^ e);
+		private: System::Void toolStripMenuItem57600_Click(System::Object^ sender, System::EventArgs^ e);
+		private: System::Void toolStripMenuItem115200_Click(System::Object^ sender, System::EventArgs^ e);
+		private: System::Void toConnectToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e);
 
-	private: System::Void buttonHightSet_Click(System::Object^ sender, System::EventArgs^ e);
-	private: System::Void textBoxHightInput_KeyDown(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e);
-	private: System::Void textBoxHightInput_MouseWheel(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e);
-	private: System::Void checkBoxServiceability_CheckedChanged(System::Object^ sender, System::EventArgs^ e);
-	private: System::Void checkBoxPUI_CheckedChanged(System::Object^ sender, System::EventArgs^ e);
-};
-
+		private: System::Void buttonHightSet_Click(System::Object^ sender, System::EventArgs^ e);
+		private: System::Void textBoxHightInput_KeyDown(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e);
+		private: System::Void textBoxHightInput_MouseWheel(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e);
+		private: System::Void checkBoxServiceability_CheckedChanged(System::Object^ sender, System::EventArgs^ e);
+		private: System::Void checkBoxPUI_CheckedChanged(System::Object^ sender, System::EventArgs^ e);
+	};
 
 }

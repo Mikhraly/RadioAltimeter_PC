@@ -19,7 +19,10 @@ namespace MyUtil {
 			bool permissionToUse = false;
 		} outData;
 
-		uint8_t crc8_ccitt_calculate(const uint8_t* array, uint8_t num);
-		uint8_t crc8_ccitt_update(uint8_t inCrc, uint8_t inData);
 	};
+
+
+	uint8_t crc8_ccitt_calculate(const uint8_t* array, uint8_t num);
+	uint8_t crc8_ccitt_update(uint8_t inCrc, uint8_t inData);
+
 };

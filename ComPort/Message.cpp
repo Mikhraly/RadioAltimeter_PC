@@ -31,14 +31,15 @@ const uint8_t* Message::getOutMessage() {
     return this->outMessage;
 }
 
-uint8_t Message::crc8_ccitt_calculate(const uint8_t *array, uint8_t num) {
+
+uint8_t MyUtil::crc8_ccitt_calculate(const uint8_t *array, uint8_t num) {
     uint8_t crc = 0xFF;
     for (int i = 0; i < num; i++)
         crc = crc8_ccitt_update(crc, array[i]);
     return crc;
 }
 
-uint8_t Message::crc8_ccitt_update(uint8_t inCrc, uint8_t inData) {
+uint8_t MyUtil::crc8_ccitt_update(uint8_t inCrc, uint8_t inData) {
     uint8_t data = inCrc ^ inData;
 
     for (uint8_t i = 0; i < 8; i++) {

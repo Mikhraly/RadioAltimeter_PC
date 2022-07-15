@@ -49,15 +49,36 @@ void ComPort::MyForm::outThread() {
 	}
 }
 
+/// <summary>
+/// Поток приема данных из COM-порта
+/// </summary>
 void ComPort::MyForm::inThread() {
-	array<unsigned char>^ inMessage = { 0, 0, 0 };
+	array<Byte>^ inBuffer = { 0, 0, 0 };
+	unsigned char in[3];
+	bool offRadiation = false;
+	bool controlRA = false;
+	bool banTest = false;
 
 	while (flag.inThreadWorks) {
-		//this->mySerialPort->Read();
+		this->mySerialPort->Read(inBuffer, 0, 3);
 
-		//this->mutex.WaitOne();
-		// to do something important
-		//this->mutex.ReleaseMutex();
+		for (int i = 0; i < 3; i++)
+			in[0] = inBuffer[0];
+
+		if (in[0] == 0x7E || in[2] == MyUtil::crc8_ccitt_calculate(in, 2)) {
+			offRadiation = in[1] & 0b1;
+			controlRA = (in[1] & 0b10) >> 1;
+			banTest = (in[1] & 0b100) >> 2;
+			
+			this->mutex.WaitOne();
+			altimeter.setOffRadiation(offRadiation).setControlRA(controlRA).setBanTest(banTest);
+			message.setOutData(altimeter.getWord());
+			const unsigned char* outArray = message.getOutMessage();
+			for (int i = 0; i < 7; i++)
+				buffer.outMessage[i] = outArray[i];
+			flag.outMessageChanged = true;
+			this->mutex.ReleaseMutex();
+		} 
 	}
 }
 
@@ -163,12 +184,10 @@ System::Void ComPort::MyForm::buttonHightSet_Click(System::Object^ sender, Syste
 	this->textBoxHightInput->Text = hightString;
 	this->labelHightSet->Text = hightString;
 
-	altimeter.setDistance(hightDouble);
-	unsigned int word = altimeter.getWord();
-	message.setOutData(word);
-	const unsigned char* outArray = message.getOutMessage();
-
 	this->mutex.WaitOne();
+	altimeter.setDistance(hightDouble);
+	message.setOutData(altimeter.getWord());
+	const unsigned char* outArray = message.getOutMessage();
 	for (int i = 0; i < 7; i++)
 		buffer.outMessage[i] = outArray[i];
 	flag.outMessageChanged = true;
@@ -192,10 +211,9 @@ System::Void ComPort::MyForm::textBoxHightInput_MouseWheel(System::Object^ sende
 }
 
 System::Void ComPort::MyForm::checkBoxServiceability_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+	this->mutex.WaitOne();
 	message.setOutData(this->checkBoxServiceability->Checked, this->checkBoxPUI->Checked);
 	const unsigned char* outArray = message.getOutMessage();
-
-	this->mutex.WaitOne();
 	for (int i = 0; i < 7; i++)
 		buffer.outMessage[i] = outArray[i];
 	flag.outMessageChanged = true;
