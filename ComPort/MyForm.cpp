@@ -192,9 +192,16 @@ System::Void ComPort::MyForm::textBoxHightInput_MouseWheel(System::Object^ sende
 }
 
 System::Void ComPort::MyForm::checkBoxServiceability_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+	message.setOutData(this->checkBoxServiceability->Checked, this->checkBoxPUI->Checked);
+	const unsigned char* outArray = message.getOutMessage();
 
+	this->mutex.WaitOne();
+	for (int i = 0; i < 7; i++)
+		buffer.outMessage[i] = outArray[i];
+	flag.outMessageChanged = true;
+	this->mutex.ReleaseMutex();
 }
 
 System::Void ComPort::MyForm::checkBoxPUI_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
-
+	this->checkBoxServiceability_CheckedChanged(sender, e);
 }
