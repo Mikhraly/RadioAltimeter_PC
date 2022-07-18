@@ -15,9 +15,10 @@ struct Buffer {
 
 struct Flag {
 	bool outMessageChanged;
+	bool firstInMessageOK;
 	bool outThreadWorks;
 	bool inThreadWorks;
-} flag = {false, false, false};
+} flag = {false, false, false, false};
 
 
 int main() {
@@ -33,19 +34,24 @@ int main() {
 /// Поток передачи данных в COM-порт
 /// </summary>
 void ComPort::MyForm::outThread() {
+	this->buttonHightSet_Click();
+	this->checkBoxes_CheckedChanged();
+
 	array<unsigned char>^ outMessage = {0,0,0,0,0,0,0};
 
 	while (flag.outThreadWorks) {
-		this->mutex.WaitOne();
-		if (flag.outMessageChanged) {
-			for (int i = 0; i < 7; i++)
-				outMessage[i] = buffer.outMessage[i];
-			flag.outMessageChanged = false;
-		}
-		this->mutex.ReleaseMutex();
+		if (flag.firstInMessageOK) {
+			this->mutex.WaitOne();
+			if (flag.outMessageChanged) {
+				for (int i = 0; i < 7; i++)
+					outMessage[i] = buffer.outMessage[i];
+				flag.outMessageChanged = false;
+			}
+			this->mutex.ReleaseMutex();
 
-		this->mySerialPort->Write(outMessage, 0, 7);
-		Thread::Sleep(10);
+			this->mySerialPort->Write(outMessage, 0, 7);
+			Thread::Sleep(10);
+		}
 	}
 }
 
@@ -60,26 +66,36 @@ void ComPort::MyForm::inThread() {
 	bool banTest = false;
 
 	while (flag.inThreadWorks) {
-		this->mySerialPort->Read(inBuffer, 0, 3);
+		try {
+			this->mySerialPort->Read(inBuffer, 0, 3);
+			for (int i = 0; i < 3; i++)
+				in[0] = inBuffer[0];
 
-		for (int i = 0; i < 3; i++)
-			in[0] = inBuffer[0];
-
-		if (in[0] == 0x7E || in[2] == MyUtil::crc8_ccitt_calculate(in, 2)) {
-			offRadiation = in[1] & 0b1;
-			controlRA = (in[1] & 0b10) >> 1;
-			banTest = (in[1] & 0b100) >> 2;
+			if (in[0] == 0x7E || in[2] == MyUtil::crc8_ccitt_calculate(in, 2)) {
+				offRadiation = in[1] & 0b1;
+				controlRA = (in[1] & 0b10) >> 1;
+				banTest = (in[1] & 0b100) >> 2;
 			
-			this->mutex.WaitOne();
-			altimeter.setOffRadiation(offRadiation).setControlRA(controlRA).setBanTest(banTest);
-			message.setOutData(altimeter.getWord());
-			const unsigned char* outArray = message.getOutMessage();
-			for (int i = 0; i < 7; i++)
-				buffer.outMessage[i] = outArray[i];
-			flag.outMessageChanged = true;
-			this->mutex.ReleaseMutex();
-		} 
+				this->mutex.WaitOne();
+				altimeter.setOffRadiation(offRadiation).setControlRA(controlRA).setBanTest(banTest);
+				message.setOutData(altimeter.getWord());
+				const unsigned char* outArray = message.getOutMessage();
+				for (int i = 0; i < 7; i++)
+					buffer.outMessage[i] = outArray[i];
+				flag.outMessageChanged = true;
+				this->mutex.ReleaseMutex();
+
+				this->checkBoxOffRadiation->Checked = offRadiation;
+				this->checkBoxControlRA->Checked = controlRA;
+				this->checkBoxBanTest->Checked = banTest;
+
+				flag.firstInMessageOK = true;
+			} 
+		
+		} catch (System::IO::IOException^ e) {}
 	}
+
+	flag.firstInMessageOK = false;
 }
 
 
@@ -172,6 +188,10 @@ System::Void ComPort::MyForm::toConnectToolStripMenuItem_Click(System::Object^ s
 
 
 System::Void ComPort::MyForm::buttonHightSet_Click(System::Object^ sender, System::EventArgs^ e) {
+	this->buttonHightSet_Click();
+}
+
+System::Void ComPort::MyForm::buttonHightSet_Click() {
 	System::String^ hightString = this->textBoxHightInput->Text;
 	System::Double hightDouble = System::Convert::ToDouble(hightString);
 	if (hightDouble < 0) {
@@ -196,7 +216,7 @@ System::Void ComPort::MyForm::buttonHightSet_Click(System::Object^ sender, Syste
 
 System::Void ComPort::MyForm::textBoxHightInput_KeyDown(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) {
 	if (e->KeyCode == Keys::Enter)
-		this->buttonHightSet_Click(sender, e);
+		this->buttonHightSet_Click();
 }
 
 System::Void ComPort::MyForm::textBoxHightInput_MouseWheel(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
@@ -207,10 +227,18 @@ System::Void ComPort::MyForm::textBoxHightInput_MouseWheel(System::Object^ sende
 	else
 		hightDouble--;
 	this->textBoxHightInput->Text = System::Convert::ToString(hightDouble);
-	this->buttonHightSet_Click(sender, e);
+	this->buttonHightSet_Click();
 }
 
 System::Void ComPort::MyForm::checkBoxServiceability_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+	this->checkBoxes_CheckedChanged();
+}
+
+System::Void ComPort::MyForm::checkBoxPUI_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+	this->checkBoxes_CheckedChanged();
+}
+
+System::Void ComPort::MyForm::checkBoxes_CheckedChanged() {
 	this->mutex.WaitOne();
 	message.setOutData(this->checkBoxServiceability->Checked, this->checkBoxPUI->Checked);
 	const unsigned char* outArray = message.getOutMessage();
@@ -218,8 +246,4 @@ System::Void ComPort::MyForm::checkBoxServiceability_CheckedChanged(System::Obje
 		buffer.outMessage[i] = outArray[i];
 	flag.outMessageChanged = true;
 	this->mutex.ReleaseMutex();
-}
-
-System::Void ComPort::MyForm::checkBoxPUI_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
-	this->checkBoxServiceability_CheckedChanged(sender, e);
 }
