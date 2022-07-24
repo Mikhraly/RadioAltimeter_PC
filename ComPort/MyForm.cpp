@@ -49,7 +49,7 @@ void ComPort::MyForm::outThread() {
 			this->mutex.ReleaseMutex();
 
 			this->mySerialPort->Write(outMessage, 0, 7);
-			Thread::Sleep(10);
+			Thread::Sleep(500);
 		}
 	}
 }
@@ -62,6 +62,9 @@ void ComPort::MyForm::inThread() {
 	unsigned char in[3];
 	unsigned char inByte;
 	
+	int count = 0;
+	unsigned char crc8 = 0xFF;
+
 	bool offRadiation = false;
 	bool controlRA = false;
 	bool banTest = false;
@@ -71,24 +74,42 @@ void ComPort::MyForm::inThread() {
 			this->mySerialPort->Read(inBuffer, 0, 1);
 			inByte = inBuffer[0];
 
-			offRadiation = inByte & 0b1 ? true : false;
-			controlRA = (inByte & 0b10) >> 1 ? true : false;
-			banTest = (inByte & 0b100) >> 2 ? true : false;
+			if (count == 0 && inByte == 0x7E) {
+				in[0] = inByte;
+				crc8 = MyUtil::crc8_ccitt_update(crc8, inByte);
+				count++;
+			}
+			else if (count == 1) {
+				in[1] = inByte;
+				crc8 = MyUtil::crc8_ccitt_update(crc8, inByte);
+				count++;
+			}
+			else if (count == 2) {
+				in[2] = inByte;
+				if (crc8 == in[2]) {
+					offRadiation = in[1] & 0b1 ? true : false;
+					controlRA = (in[1] & 0b10) >> 1 ? true : false;
+					banTest = (in[1] & 0b100) >> 2 ? true : false;
 
-			this->mutex.WaitOne();
-			altimeter.setOffRadiation(offRadiation).setControlRA(controlRA).setBanTest(banTest);
-			message.setOutData(altimeter.getWord());
-			const unsigned char* outArray = message.getOutMessage();
-			for (int i = 0; i < 7; i++)
-				buffer.outMessage[i] = outArray[i];
-			flag.outMessageChanged = true;
-			this->mutex.ReleaseMutex();
+					this->mutex.WaitOne();
+					altimeter.setOffRadiation(offRadiation).setControlRA(controlRA).setBanTest(banTest);
+					message.setOutData(altimeter.getWord());
+					const unsigned char* outArray = message.getOutMessage();
+					for (int i = 0; i < 7; i++)
+						buffer.outMessage[i] = outArray[i];
+					flag.outMessageChanged = true;
+					this->mutex.ReleaseMutex();
 
-			this->checkBoxOffRadiation->Checked = offRadiation;
-			this->checkBoxControlRA->Checked = controlRA;
-			this->checkBoxBanTest->Checked = banTest;
+					this->checkBoxOffRadiation->Checked = offRadiation;
+					this->checkBoxControlRA->Checked = controlRA;
+					this->checkBoxBanTest->Checked = banTest;
 
-			flag.firstInMessageOK = true;
+					flag.firstInMessageOK = true;
+				}
+				count = 0;
+				crc8 = 0xFF;
+			}
+
 		}
 	} catch (System::IO::IOException^ e) {}
 
