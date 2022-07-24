@@ -12,25 +12,24 @@ RadioAltimeter::RadioAltimeter() {
 }
 
 
-RadioAltimeter RadioAltimeter::setOffRadiation(bool status) {
+RadioAltimeter& RadioAltimeter::setOffRadiation(bool status) {
     dataIn.offRadiation = status;
-    return *(this);
+    return *this;
 }
 
-RadioAltimeter RadioAltimeter::setControlRA(bool status) {
+RadioAltimeter& RadioAltimeter::setControlRA(bool status) {
     dataIn.controlRA = status;
-    return *(this);
+    return *this;
 }
 
-RadioAltimeter RadioAltimeter::setBanTest(bool status) {
+RadioAltimeter& RadioAltimeter::setBanTest(bool status) {
     dataIn.banTest = status;
-    return *(this);
+    return *this;
 }
 
-RadioAltimeter RadioAltimeter::setDistance(float meters) {
+RadioAltimeter& RadioAltimeter::setDistance(float meters) {
     dataIn.distance = meters;
-    wordStructure.infoPart = calculateInfoPart(dataIn.distance);
-    return *(this);
+    return *this;
 }
 
 /*
@@ -56,6 +55,7 @@ bool RadioAltimeter::getPermissionToUse() const {
 }
 
 unsigned int RadioAltimeter::getWord() {
+    wordStructure.infoPart = calculateInfoPart(dataIn.distance);
     wordStructure.matrix = calculateMatrix(dataIn);
     wordStructure.parity = calculateParity(wordStructure);
     return (wordStructure.address | wordStructure.infoPart << 8 | wordStructure.matrix << 29 | wordStructure.parity << 31);

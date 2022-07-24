@@ -4,11 +4,11 @@ class RadioAltimeter final {
 public:
     RadioAltimeter();
 
-    RadioAltimeter setOffRadiation(bool status);
-    RadioAltimeter setControlRA(bool status);
-    RadioAltimeter setBanTest(bool status);
+    RadioAltimeter& setOffRadiation(bool status);
+    RadioAltimeter& setControlRA(bool status);
+    RadioAltimeter& setBanTest(bool status);
 
-    RadioAltimeter setDistance(float distance);
+    RadioAltimeter& setDistance(float distance);
     /*
     bool isOffRadiationSet() const;
     bool isControlRASet() const;

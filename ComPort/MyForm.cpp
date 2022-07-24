@@ -10,7 +10,7 @@ MyUtil::Message message;
 
 struct Buffer {
 	unsigned char outMessage[7];
-	unsigned char inMessage[3];
+	unsigned char inMessage[3];		// do not used
 } buffer = { 0, 0 };
 
 struct Flag {
@@ -19,7 +19,6 @@ struct Flag {
 	bool outThreadWorks;
 	bool inThreadWorks;
 } flag = {false, false, false, false};
-
 
 int main() {
 	Application::EnableVisualStyles();
@@ -61,39 +60,37 @@ void ComPort::MyForm::outThread() {
 void ComPort::MyForm::inThread() {
 	array<Byte>^ inBuffer = { 0, 0, 0 };
 	unsigned char in[3];
+	unsigned char inByte;
+	
 	bool offRadiation = false;
 	bool controlRA = false;
 	bool banTest = false;
 
-	while (flag.inThreadWorks) {
-		try {
-			this->mySerialPort->Read(inBuffer, 0, 3);
-			for (int i = 0; i < 3; i++)
-				in[0] = inBuffer[0];
+	try {
+		while (flag.inThreadWorks) {
+			this->mySerialPort->Read(inBuffer, 0, 1);
+			inByte = inBuffer[0];
 
-			if (in[0] == 0x7E || in[2] == MyUtil::crc8_ccitt_calculate(in, 2)) {
-				offRadiation = in[1] & 0b1;
-				controlRA = (in[1] & 0b10) >> 1;
-				banTest = (in[1] & 0b100) >> 2;
-			
-				this->mutex.WaitOne();
-				altimeter.setOffRadiation(offRadiation).setControlRA(controlRA).setBanTest(banTest);
-				message.setOutData(altimeter.getWord());
-				const unsigned char* outArray = message.getOutMessage();
-				for (int i = 0; i < 7; i++)
-					buffer.outMessage[i] = outArray[i];
-				flag.outMessageChanged = true;
-				this->mutex.ReleaseMutex();
+			offRadiation = inByte & 0b1 ? true : false;
+			controlRA = (inByte & 0b10) >> 1 ? true : false;
+			banTest = (inByte & 0b100) >> 2 ? true : false;
 
-				this->checkBoxOffRadiation->Checked = offRadiation;
-				this->checkBoxControlRA->Checked = controlRA;
-				this->checkBoxBanTest->Checked = banTest;
+			this->mutex.WaitOne();
+			altimeter.setOffRadiation(offRadiation).setControlRA(controlRA).setBanTest(banTest);
+			message.setOutData(altimeter.getWord());
+			const unsigned char* outArray = message.getOutMessage();
+			for (int i = 0; i < 7; i++)
+				buffer.outMessage[i] = outArray[i];
+			flag.outMessageChanged = true;
+			this->mutex.ReleaseMutex();
 
-				flag.firstInMessageOK = true;
-			} 
-		
-		} catch (System::IO::IOException^ e) {}
-	}
+			this->checkBoxOffRadiation->Checked = offRadiation;
+			this->checkBoxControlRA->Checked = controlRA;
+			this->checkBoxBanTest->Checked = banTest;
+
+			flag.firstInMessageOK = true;
+		}
+	} catch (System::IO::IOException^ e) {}
 
 	flag.firstInMessageOK = false;
 }
